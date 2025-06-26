@@ -10,6 +10,7 @@ This project is a modern chatbot interface with a strong focus on the underlying
 - The backend is designed to be easily extendable for future improvements or integration with more advanced models.
 
 ## User Interface
+- The web interface was forked from [ChristophHandschuh/chatbot-ui](https://github.com/ChristophHandschuh/chatbot-ui).
 - The interface is clean, intuitive, and visually appealing, providing a seamless chat experience.
 - Built with modern web technologies (React, TypeScript, Tailwind CSS, Vite), the UI is fast, responsive, and accessible.
 - Features include a dynamic chat window, markdown support, theme toggling, and a sidebar for easy navigation.
