@@ -19,9 +19,9 @@ export const Overview = () => {
           <MessageCircle size={44}/>
         </p>
         <p>
-          Welcome to <strong>chatbot-ui</strong><br />
-          a open source template made by<br />
-          <strong>Leon Binder</strong> and <strong>Christoph Handschuh</strong>.
+          Welcome to <strong>our final year project</strong><br />
+          an LLM chatbot<br />
+          <strong>Adam Hmida Loghmari</strong> and <strong>Aymen Ben Ghali</strong>.
         </p>
       </div>
     </motion.div>

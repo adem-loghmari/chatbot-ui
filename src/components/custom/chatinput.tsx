@@ -15,16 +15,37 @@ interface ChatInputProps {
 
 const suggestedActions = [
     {
-        title: 'How is the weather',
-        label: 'in Vienna?',
-        action: 'How is the weather in Vienna today?',
+        title: 'What are the symptoms of liver cancer',
+        label: 'Symptoms',
+        action: 'What are the common symptoms of liver cancer ?',
     },
     {
-        title: 'Tell me a fun fact',
-        label: 'about pandas',
-        action: 'Tell me an interesting fact about pandas',
+        title: 'How is liver cancer diagnosed ?',
+        label: 'Diagnosis',
+        action: 'How is liver cancer diagnosed ?',
+    },
+    {
+        title: 'What are the treatment options for liver cancer ?',
+        label: 'Treatment',
+        action: 'What are the treatment options for liver cancer ?',
+    },
+    {
+        title: 'What is the survival rate for liver cancer ?',
+        label: 'Statistics',
+        action: 'What is the survival rate for liver cancer ?',
+    },
+    {
+        title: 'Can liver cancer be prevented ?',
+        label: 'Prevention',
+        action: 'Can liver cancer be prevented ?',
+    },
+    {
+        title: 'What are the risk factors for liver cancer ?',
+        label: 'Risks',
+        action: 'What are the risk factors for liver cancer ?',
     },
 ];
+
 
 export const ChatInput = ({ question, setQuestion, onSubmit, isLoading }: ChatInputProps) => {
     const [showSuggestions, setShowSuggestions] = useState(true);

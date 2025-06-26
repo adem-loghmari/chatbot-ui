@@ -7,7 +7,13 @@ import { Overview } from "@/components/custom/overview";
 import { Header } from "@/components/custom/header";
 import {v4 as uuidv4} from 'uuid';
 
-const socket = new WebSocket("ws://localhost:8090"); //change to your websocket endpoint
+import { Client } from "@gradio/client";
+
+const client = await Client.connect("aymenelghali/mistralai-Mistral-7B-Instruct-v0.1");
+
+interface PredictResponse {
+  answer: string;
+}
 
 export function Chat() {
   const [messagesContainerRef, messagesEndRef] = useScrollToBottom<HTMLDivElement>();
@@ -15,58 +21,37 @@ export function Chat() {
   const [question, setQuestion] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const messageHandlerRef = useRef<((event: MessageEvent) => void) | null>(null);
+  async function handleSubmit(text?: string) {
+    if (isLoading) return;
 
-  const cleanupMessageHandler = () => {
-    if (messageHandlerRef.current && socket) {
-      socket.removeEventListener("message", messageHandlerRef.current);
-      messageHandlerRef.current = null;
+    const messageText = text || question.trim();
+    if (!messageText) {
+      console.error("Error: No value provided for required parameter: question");
+      return;
     }
-  };
 
-async function handleSubmit(text?: string) {
-  if (!socket || socket.readyState !== WebSocket.OPEN || isLoading) return;
+    setIsLoading(true);
 
-  const messageText = text || question;
-  setIsLoading(true);
-  cleanupMessageHandler();
-  
-  const traceId = uuidv4();
-  setMessages(prev => [...prev, { content: messageText, role: "user", id: traceId }]);
-  socket.send(messageText);
-  setQuestion("");
+    const traceId = uuidv4();
+    setMessages((prev) => [...prev, { content: messageText, role: "user", id: traceId }]);
+    setQuestion("");
 
-  try {
-    const messageHandler = (event: MessageEvent) => {
+    try {
+      const result = await client.predict("/ask_model", { question: messageText });
+      console.log(result.data);
+
+      const assistantMessage = (result.data as string[])[0];
+
+      setMessages((prev) => [
+        ...prev,
+        { content: assistantMessage, role: "assistant", id: uuidv4() },
+      ]);
+    } catch (error) {
+      console.error("Error fetching response from the model:", error);
+    } finally {
       setIsLoading(false);
-      if(event.data.includes("[END]")) {
-        return;
-      }
-      
-      setMessages(prev => {
-        const lastMessage = prev[prev.length - 1];
-        const newContent = lastMessage?.role === "assistant" 
-          ? lastMessage.content + event.data 
-          : event.data;
-        
-        const newMessage = { content: newContent, role: "assistant", id: traceId };
-        return lastMessage?.role === "assistant"
-          ? [...prev.slice(0, -1), newMessage]
-          : [...prev, newMessage];
-      });
-
-      if (event.data.includes("[END]")) {
-        cleanupMessageHandler();
-      }
-    };
-
-    messageHandlerRef.current = messageHandler;
-    socket.addEventListener("message", messageHandler);
-  } catch (error) {
-    console.error("WebSocket error:", error);
-    setIsLoading(false);
+    }
   }
-}
 
   return (
     <div className="flex flex-col min-w-0 h-dvh bg-background">
