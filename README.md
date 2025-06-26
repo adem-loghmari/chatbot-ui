@@ -4,8 +4,8 @@ This project is a modern chatbot interface with a strong focus on the underlying
 
 ## AI Model Focus
 - The core of this project is the AI model: `aymenelghali/mistralai-Mistral-7B-Instruct-v0.1`, carefully integrated for natural, engaging conversations.
-- **SapBERT** was used for training the large language model (LLM), enhancing its understanding and semantic capabilities.
-- **Mistral** serves as the backbone for the chatbot, providing fast and accurate conversational responses.
+- **SapBERT** was used for training the large language model (LLM), enhancing its semantic understanding and performance.
+- **Mistral** is used as the backbone for the chatbot, providing fast and accurate conversational responses.
 - Emphasis was placed on model performance, accuracy, and adaptability to various user queries.
 - The backend is designed to be easily extendable for future improvements or integration with more advanced models.
 

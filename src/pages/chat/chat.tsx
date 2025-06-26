@@ -1,7 +1,7 @@
 import { ChatInput } from "@/components/custom/chatinput";
 import { PreviewMessage, ThinkingMessage } from "../../components/custom/message";
 import { useScrollToBottom } from '@/components/custom/use-scroll-to-bottom';
-import { useState, useRef } from "react";
+import { useState,} from "react";
 import { message } from "../../interfaces/interfaces"
 import { Overview } from "@/components/custom/overview";
 import { Header } from "@/components/custom/header";
@@ -11,9 +11,6 @@ import { Client } from "@gradio/client";
 
 const client = await Client.connect("aymenelghali/mistralai-Mistral-7B-Instruct-v0.1");
 
-interface PredictResponse {
-  answer: string;
-}
 
 export function Chat() {
   const [messagesContainerRef, messagesEndRef] = useScrollToBottom<HTMLDivElement>();
